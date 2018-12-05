@@ -1,0 +1,186 @@
+      <h1 id="5-01" class="flag">中文分词服务</h1>
+      <h2>接口描述</h2>
+      <p>中文分词算法是指将一个汉字序列切分成一个一个单独的词，与英文以空格作为天然的分隔符不同，中文字符在语义识别时，需要把数个字符组合成词，才能表达出真正的含义。</p>
+      <h2 id="5-02" class="flag">请求说明</h2>
+      <p><strong>请求参数</strong></p>
+      <ul>
+        <li>HTTP方法： <code>POST</code></li>
+        <li>请求URL：<code>http://www.dinfo.cn/api/fenci</code></li>
+        <li>请求参数：</li>
+      </ul>
+      <table>
+        <thead><tr><th>参数</th><th>值</th></tr></thead>
+        <tbody>
+        <tr><td>segdata</td><td>待分析文本，长度不超过10000字符</td></tr>
+        <tr><td>token</td><td>参考<router-link :to="{path:'/apis/doc',query:{name:'jqrz'}}">“鉴权认证机制”</router-link></td></tr>
+        </tbody>
+      </table>
+      <p><strong>请求示例代码：</strong></p>
+      <copy name="zhongwenfenci">
+        <template slot="java">
+          CloseableHttpClient httpclient = HttpClients.createDefault();
+          String token="eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIwYWYxOTQ2ZTI1YWI0NGJlODQ0YzBkMTBlMGJiMzZlZCIsImFjY2Vzc0tleVNlY3JldCI6Ijk0N2JkNzY3ZjI4NzRhNWFhNmY4NDYwODA0ODNmNzE5IiwiZXhwIjoxNTQzMzA3MzU5fQ.Gq7puFQ4XrV0DYFuWnXFHSQXHKtgh6FVKcDLy5MB8v-o2ueD7vaOot8O-zrC6lQpptlKKM3_ddPc-kp--HqbWLh0YNjYimRHcyF2rNcy0NlpOAJiZRpCcmw-zdCA5dsalweKa4qX3DrweKO6NghxLW-l_eIbwhhJD10Utdvrmlg";
+          List&lt;NameValuePair&gt; formParams = new ArrayList<>();
+          formParams.add(new BasicNameValuePair("segdata","自然语言处理是计算机科学领域与人工智能领域中的一个重要方向。"));
+          formParams.add(new BasicNameValuePair("token",token));
+          UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
+          HttpPost post = new HttpPost("http://www.dinfo.cn/api/fenci");
+          post.setEntity(entity);
+          CloseableHttpResponse response = httpclient.execute(post);
+          String body = EntityUtils.toString(response.getEntity());
+          System.out.println(body);
+          response.close();
+          httpclient.close();
+
+        </template>
+        <template slot="python"></template>
+      </copy>
+      <h2 id="5-03" class="flag">返回说明</h2>
+      <p><strong>返回参数</strong></p>
+      <table>
+        <thead><tr><th>参数</th><th>是否必须</th><th>类型</th><th>值</th></tr></thead>
+        <tbody>
+        <tr>
+          <td>data</td>
+          <td>是</td>
+          <td>json</td>
+          <td>返回结果数据</td>
+        </tr>
+        <tr>
+          <td>+words</td>
+          <td>是</td>
+          <td>array</td>
+          <td>分词结果</td>
+        </tr>
+        <tr>
+          <td>success</td>
+          <td>否</td>
+          <td>boolean</td>
+          <td>请求成功与否</td>
+        </tr>
+        <tr>
+          <td>status</td>
+          <td>是</td>
+          <td>integer</td>
+          <td>请求返回码</td>
+        </tr>
+        </tbody>
+      </table>
+      <p><strong>返回示例</strong></p>
+      <pre>
+        <code>
+        {
+	"data": {
+		"words": [
+		  "[{\"word\":\"自然语言处理\"},{\"word\":\"是\"},{\"word\":\"计算机\"},{\"word\":\"科学\"},{\"word\":\"领域\"},{\"word\":\"与\"},{\"word\":\"人工智能\"},{\"word\":\"领域\"},{\"word\":\"中的\"},{\"word\":\"一个\"},{\"word\":\"重要\"},{\"word\":\"方向\"},{\"word\":\"。\"}]"
+		]
+	},
+	"success": true,
+	"status": 200
+}
+        </code>
+      </pre>
+      <h1 id="10-01" class="flag">中文命名实体识别</h1>
+      <h2>接口描述</h2>
+      <p>自动识别并提取出给定中文文本内容中，人名、地名、组织机构，以及企业名称等实体信息。</p>
+      <h2 id="10-02" class="flag">请求说明</h2>
+      <p><strong>请求参数</strong></p>
+      <ul>
+        <li>HTTP方法： <code>POST</code></li>
+        <li>请求URL：<code>http://www.dinfo.cn/api/zhongwenshitishibie</code></li>
+        <li>请求参数：</li>
+      </ul>
+      <table>
+        <thead><tr><th>参数</th><th>值</th></tr></thead>
+        <tbody>
+        <tr><td>segdata</td><td>待分析文本数据内容，长度不超过10000字符</td></tr>
+        <tr><td>token</td><td>参考<router-link :to="{path:'/apis/doc',query:{name:'jqrz'}}">“鉴权认证机制”</router-link></td></tr>
+        </tbody>
+      </table>
+      <p><strong>请求示例代码：</strong></p>
+      <copy name="zhongwenmingmingshitishibie">
+        <template slot="java">
+          CloseableHttpClient httpclient = HttpClients.createDefault();
+          String token="eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIwYWYxOTQ2ZTI1YWI0NGJlODQ0" +
+          "YzBkMTBlMGJiMzZlZCIsImFjY2Vzc0tleVNlY3JldCI6Ijk0N2JkNzY3ZjI4Nz" +
+          "RhNWFhNmY4NDYwODA0ODNmNzE5IiwiZXhwIjoxNTQ0Njg3MTk2fQ.Hs6DuDpad" +
+          "gctKs07Ytg66R6LWpZvMjKhvXgy4wjtgpPvxQZyoAEfaI1qvGxy57rgWke6ZQw" +
+          "hScktgFyVmqLj9NoqiBF8FNqAnOskP8GwPn1GArN4QUEkrczW3Bv0GfebTQu7K" +
+          "CnTKinjERuOPmGIXB_WCM-MxxJc6pZQiwnoxZc";
+          List&lt;NameValuePair&gt; formParams = new ArrayList<>();
+          formParams.add(new BasicNameValuePair("data",
+          "P2P平台泰然金融在美国东部时间周三（北京时间周四11月15日凌晨）" +
+          "向美国证券交易委员会提交了IPO（首次公开招股）申请文件。" +
+          "这份招股书显示，泰然金融计划在纽约证券交易所挂牌上市，股票代码为" +
+          "“TAI”，拟筹集最多2000万美元。"));
+          formParams.add(new BasicNameValuePair("token",token));
+          UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
+          HttpPost post = new HttpPost("http://www.dinfo.cn/api/zhongwenshitishibie");
+          post.setEntity(entity);
+          CloseableHttpResponse response = httpclient.execute(post);
+          String body = EntityUtils.toString(response.getEntity());
+          System.out.println(body);
+          response.close();
+          httpclient.close();
+
+        </template>
+        <template slot="python"></template>
+      </copy>
+      <h2 id="10-03" class="flag">返回说明</h2>
+      <p><strong>返回参数</strong></p>
+      <table>
+        <thead><tr><th>参数</th><th>是否必须</th><th>类型</th><th>值</th></tr></thead>
+        <tbody>
+        <tr>
+          <td>data</td>
+          <td>是</td>
+          <td>json</td>
+          <td>返回结果数据</td>
+        </tr>
+        <tr>
+          <td>+result</td>
+          <td>是</td>
+          <td>array</td>
+          <td>实体识别结果</td>
+        </tr>
+        <tr>
+        <tr>
+          <td>+entityLable</td>
+          <td>是</td>
+          <td>string</td>
+          <td>实体分类标签，ORG：组织机构名称、PER：人名、POS：地名</td>
+        </tr>
+        <tr>
+          <td>+ entityName</td>
+          <td>是</td>
+          <td>string</td>
+          <td>实体名称</td>
+        </tr>
+        <tr>
+        <tr>
+          <td>success</td>
+          <td>是</td>
+          <td>boolean</td>
+          <td>请求成功与否</td>
+        </tr>
+        <tr>
+          <td>status</td>
+          <td>是</td>
+          <td>integer</td>
+          <td>请求返回码</td>
+        </tr>
+        </tbody>
+      </table>
+      <p><strong>返回示例</strong></p>
+      <pre>
+        <code>
+      {
+	"data": {
+		"result": ["[{\"entityLable\":\"ORG\",\"entityName\":\"IPO\"},{\"entityLable\":\"ORG\",\"entityName\":\"纽约证券交易所\"}]"]
+	},
+	"success": true,
+	"status": 200
+}
+
+        </code>
+      </pre>
